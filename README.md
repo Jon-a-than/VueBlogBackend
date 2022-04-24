@@ -1,7 +1,7 @@
 # Vue博客的后端
 
 ## 项目搭建博客记录
-[博客记录](www.qingshaner.com)
+[博客记录](https://www.qingshaner.com)
 
 ## 使用框架
 `nodejs` + `TypeScript` + `express`
@@ -23,6 +23,6 @@ pnpm i nodemon -g
 pnpm i ts-node -g
 ```
 **若没有`typescript`,还需全局安装`typescript`**
-```shel
+```shell
 pnpm i typescript@latest -g
 ```
