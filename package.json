@@ -1,8 +1,17 @@
 {
+	"name": "vue-blog-backend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "app.ts",
 	"scripts": {
-		"start": "nodemon index.ts"
+		"start": "nodemon app.ts"
 	},
+	"keywords": [],
+	"author": "Jon-a-than(www.qingshaner.com)",
+	"license": "ISC",
 	"dependencies": {
+		"body-parser": "^1.20.0",
+		"cors": "^2.8.5",
 		"express": "^4.17.3"
 	},
 	"devDependencies": {
