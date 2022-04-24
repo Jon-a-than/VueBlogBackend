@@ -1,9 +1,12 @@
 # Vue博客的后端
 
-## 使用
+## 项目搭建博客记录
+[博客记录](www.qingshaner.com)
+
+## 使用框架
 `nodejs` + `TypeScript` + `express`
 
-## 辅助
+## 辅助模块
 `nodemon` + `ts-node`
 
 ## 快速开始
