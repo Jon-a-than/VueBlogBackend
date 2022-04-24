@@ -6,6 +6,9 @@
 ## 使用框架
 `nodejs` + `TypeScript` + `express`
 
+## expres中间件
+`cors` + `body-parser`
+
 ## 辅助模块
 `nodemon` + `ts-node`
 
@@ -18,4 +21,8 @@ pnpm start
 ```shell
 pnpm i nodemon -g
 pnpm i ts-node -g
+```
+**若没有`typescript`,还需全局安装`typescript`**
+```shel
+pnpm i typescript@latest -g
 ```
