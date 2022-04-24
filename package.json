@@ -2,9 +2,9 @@
 	"name": "vue-blog-backend",
 	"version": "1.0.0",
 	"description": "",
-	"main": "app.ts",
+	"main": "./src/app.ts",
 	"scripts": {
-		"start": "nodemon app.ts"
+		"start": "nodemon ./src/app.ts"
 	},
 	"keywords": [],
 	"author": "Jon-a-than(www.qingshaner.com)",
