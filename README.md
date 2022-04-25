@@ -10,7 +10,7 @@
 `cors` + `body-parser`
 
 ## 辅助模块
-`nodemon` + `ts-node`
+`nodemon` + `ts-node` + `dotenv` + `axios`
 
 ## 快速开始
 ```shell
