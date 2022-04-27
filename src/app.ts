@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import useRouter from './router'
 import cors from 'cors'
 
-const port = 3000
+const port = 8080
 const app = express()
 
 app.use(cors())
