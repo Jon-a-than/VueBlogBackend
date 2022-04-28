@@ -14,7 +14,7 @@ interface Message {
 interface ResponseData {
   statusCode: number,
   message: string,
-  data: any
+  data: Message | null
 }
 
-export { Params, Message, ResponseData }
+export { Params, ResponseData }

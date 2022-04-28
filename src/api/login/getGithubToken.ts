@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { ApiPost, ApiGet } from '../../utils/request'
-import { Params, Message, ResponseData } from './types'
+import { Params, ResponseData } from './types'
 import dotenv from 'dotenv'
 
 const config = dotenv.config().parsed
@@ -14,14 +14,13 @@ const params: Params = {
 const responseData: ResponseData = {
   statusCode: 2000,
   message: 'success',
-  data: {},
+  data: null,
 }
 
-const message: Message = {
-  login: '',
-  id: -1,
-  token: '',
-  avatar_url: '',
+const setResponseData = (newData: ResponseData) => {
+  responseData.statusCode = newData.statusCode
+  responseData.message = newData.message
+  responseData.data = newData.data
 }
 
 export const getGithubToken = {
@@ -30,22 +29,18 @@ export const getGithubToken = {
     params.code = String(req.query.code)
 
     // 获取GitHub token
-    const data = await ApiPost('https://github.com/login/oauth/access_token', params)
-    const token = data.data.split('&')[0].split('=')[1]
-
-    // 获取用户信息
-    let userData: any = {
-      status: 0,
-      data: {
-        login: '',
-        id: 0,
-        token: '',
-        avatar_url: '',
-      }
+    let token = ''
+    try {
+      const data = await ApiPost('https://github.com/login/oauth/access_token', params)
+      token = data.data.split('&')[0].split('=')[1]
+    } catch (e: any) {
+      setResponseData({ statusCode: 5001, message: '获取GitHub token失败', data: null })
     }
 
+    // 获取用户信息
     try {
-      userData = await ApiGet('https://api.github.com/user', {
+      // 获取access_token
+      const userData = await ApiGet('https://api.github.com/user', {
         headers: {
           'Authorization': 'token ' + token
         }
@@ -53,27 +48,25 @@ export const getGithubToken = {
 
       // 处理请求结果
       if (userData.status === 200 && userData.data.login) {
-        responseData.statusCode = 2000
-        responseData.message = 'success'
-      } else {
-        responseData.statusCode = 4001
-        responseData.message = 'fail'
-      }
+        // 用户信息比对
+        if (userData.data.id != config!.USER_ID)
+          setResponseData({ statusCode: 4003, message: '用户信息不匹配', data: null })
+        else
+          setResponseData({
+            statusCode: 2000,
+            message: 'success',
+            data: {
+              login: userData.data.login,
+              id: userData.data.id,
+              token: token,
+              avatar_url: userData.data.avatar_url,
+            }
+          })
+      } else
+        setResponseData({ statusCode: 4001, message: '获取用户信息失败', data: null })
     } catch (e: any) {
-      responseData.statusCode = 4001
-      responseData.message = 'fail'
+      setResponseData({ statusCode: 5002, message: '无效token', data: null })
     }
-
-    // 返回用户信息
-    if (responseData.statusCode === 2000) {
-      message.login = userData.data.login
-      message.id = userData.data.id
-      message.token = token
-      message.avatar_url = userData.data.avatar_url
-      responseData.data = message
-    }
-
-    // TODO: 将用户信息存入数据库
 
     res.send(responseData)
   }
