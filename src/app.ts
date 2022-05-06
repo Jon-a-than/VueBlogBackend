@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 app.use(useRouter)
 mongoose()
 
-Test.create({ name: '张三' }, (err, doc) => {
+Test.findOneAndUpdate({ name: '张三' }, { name: '李四' }, (err: any, doc: any) => {
   if (err) {
     console.log(err)
   } else {
